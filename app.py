@@ -1,42 +1,51 @@
+import socket
 from recorder import start_recording, stop_recording
 from transcriber import transcribe_audio
 from injector import type_text
 
+HOST = "127.0.0.1"
+PORT = 65432
+
+is_recording = False
+def toggle_recording():
+    global is_recording
+
+    if not is_recording:
+        start_recording()
+        is_recording = True
+
+    else:
+        audio_data = stop_recording()
+
+        is_recording = False
+
+        print("\nTranscribing...")
+
+        text = transcribe_audio(audio_data)
+
+        print("\nTranscription:")
+        print(text)
+
+        text = text.strip()
+
+        if text:
+            print("\nTyping text...")
+            type_text(text)
+
 
 def main():
-    
-    print(
-        "\nPress:\n"
-        "'r' -> start recording\n"
-        "'s' -> stop recording\n"
-        "'q' -> quit\n\n"
-        )
-    
-    while True:
+    print("VoiceFlow started.")
 
-        command = input()
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+        server.bind((HOST, PORT))
 
-        if command=='r':
-            start_recording()
-        
-        elif command =='s':
+        server.listen()
 
-            audio_data = stop_recording()
+        while True:
+            conn, addr = server.accept()
 
-            print("\nTranscribing...")
-            text = transcribe_audio(audio_data)
-            
-            print("\nTranscription")
-            print(text)
-
-            text = text.strip()
-            
-            if text:
-                print("\n Typing text")
-                type_text(text)
-            
-        elif command=='q':
-            break
+            with conn:
+                toggle_recording()
 
 
 if __name__ == "__main__":

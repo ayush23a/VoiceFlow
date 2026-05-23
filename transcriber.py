@@ -36,6 +36,6 @@ def transcribe_audio(audio_data):
     transcription = ""
 
     for segment in segments:
-        transcription += segment.text + " "
+        transcription += segment.text + ""
 
     return transcription.strip()
