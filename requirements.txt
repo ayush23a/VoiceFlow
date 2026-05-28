@@ -4,5 +4,6 @@ numpy
 pynput
 scipy
 socket
+PyQt6
 
 
