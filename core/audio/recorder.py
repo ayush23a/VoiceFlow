@@ -1,8 +1,7 @@
 import sounddevice as sd
-# from scipy.io.wavfile import write
+from configs.settings import SAMPLE_RATE
 import numpy as np
 
-SAMPLE_RATE = 16000
 
 audio_chunks=[]
 stream = None

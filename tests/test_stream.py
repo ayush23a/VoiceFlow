@@ -1,11 +1,11 @@
 import asyncio
 
-from stream_recorder import (
+from core.audio.stream_recorder import (
     audio_producer,
     chunk_queue
 )
 
-from stream_transcriber import (
+from core.stt.stream_transcriber import (
     transcriber_worker
 )
 

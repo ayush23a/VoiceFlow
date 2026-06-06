@@ -1,7 +1,7 @@
 import socket
-from recorder import start_recording, stop_recording
-from transcriber import transcribe_audio
-from injector import type_text
+from core.audio.recorder import start_recording, stop_recording
+from core.stt.transcriber import transcribe_audio
+from core.injection.injector import type_text
 import subprocess
 import time
 

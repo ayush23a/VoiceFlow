@@ -1,21 +1,21 @@
 import sounddevice as sd
 import asyncio
+from configs.settings import SAMPLE_RATE, CHUNK_DURATION
 
-SAMPLE_RATE = 16000
-CHUNK_DURATION = 3.0
 
-chunk_queue = asyncio.Queue()
+chunk_queue = asyncio.Queue(maxsize=5)
 
 
 async def audio_producer():
 
     loop = asyncio.get_running_loop()
 
-    def callback(indata, frames, time, status):
-
-        print("Chunk received")
+    def callback(indata, frames, time_info, status):
 
         audio_chunk = indata.copy()
+
+        if chunk_queue.full():
+            return
 
         asyncio.run_coroutine_threadsafe(
             chunk_queue.put(audio_chunk),
@@ -26,7 +26,9 @@ async def audio_producer():
         samplerate=SAMPLE_RATE,
         channels=1,
         callback=callback,
-        blocksize=int(SAMPLE_RATE * CHUNK_DURATION)
+        blocksize=int(
+            SAMPLE_RATE * CHUNK_DURATION
+        )
     ):
 
         print("Streaming audio...")

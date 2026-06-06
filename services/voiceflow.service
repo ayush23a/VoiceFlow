@@ -1,0 +1,13 @@
+[Unit]
+Description=VoiceFlow Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ayushaman/Documents/Ayush_Code/Projects/wispr_linux
+ExecStart=/home/ayushaman/Documents/Ayush_Code/Projects/wispr_linux/.venv/bin/python app.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
