@@ -9,3 +9,5 @@ __pycache__/
 todo.txt
 
 repomix-output.xml
+.env
+tests/
