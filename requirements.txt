@@ -3,7 +3,6 @@ sounddevice
 numpy
 pynput
 scipy
-socket
 PyQt6
-
-
+groq
+python-dotenv
